@@ -46,7 +46,7 @@ dotnet tool update --global dotnet-ef
 ```
 
 ### Add DB connection with connection string named SampleConnection.
-Sample connection strings.  NOTE: The `\\` is for when this connection string is written inside the appsettings.json file, which must be in a JSON format.  To get a `\` char in JSON you must escape it as `\\`.  When you put this connection string into the dotnet user-secrets you no longer need the escape sequence.
+Sample connection strings.  NOTE: The `\\` is for when this connection string is written inside the appsettings.json file, which must be in a JSON format.  To get a `\` char in JSON you must escape it as `\\`.  When you put this connection string into the dotnet user-secrets, to hide your username and password, you no longer need the escape sequence.
 
 ```
 # Docker (password is in single quotes in case it has special characters, would still
