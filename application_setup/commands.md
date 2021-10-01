@@ -45,8 +45,19 @@ dotnet tool install --global dotnet-ef
 dotnet tool update --global dotnet-ef
 ```
 
-Add DB connection with connection string named SampleConnection.
+### Add DB connection with connection string named SampleConnection.
+Sample connection strings.  NOTE: The `\\` is for when this connection string is written inside the appsettings.json file, which must be in a JSON format.  To get a `\` char in JSON you must escape it as `\\`.  When you put this connection string into the dotnet user-secrets you no longer need the escape sequence.
 
+```
+# Docker (password is in single quotes in case it has special characters, would still
+# need to escape a ' as ''):
+Data Source=localhost;Initial Catalog=AuctionHouse;User Id=sa;Password='Hello123#';
+
+# LocalDB
+Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AuctionHouse;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
+```
+
+### Create Model classes and the DBContext subclass
 Reverse engineer C# model files from the DB schema found through the SampleConnection, placing them in the Models folder, and also create a DBContext subclass called SampleDbContext in the Models folder.  If older models exist already, the --force will overwrite them.
 ```
 dotnet ef dbcontext scaffold Name=SampleConnection Microsoft.EntityFrameworkCore.SqlServer --context SampleDbContext --context-dir Models --output-dir Models --verbose --force
