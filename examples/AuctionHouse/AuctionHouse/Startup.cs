@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AuctionHouse.Models;
+using Microsoft.EntityFrameworkCore;
+using AuctionHouse.DAL.Abstract;
+using AuctionHouse.DAL.Concrete;
 
 namespace AuctionHouse
 {
@@ -24,6 +28,12 @@ namespace AuctionHouse
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<AuctionHouseDbContext>( options => 
+                options.UseSqlServer(Configuration.GetConnectionString("AuctionHouseConnection"))
+            );
+            // Configure the built-in DI container to provide a BuyerRepository
+            // when an IBuyerRepository is requested
+            services.AddScoped<IBuyerRepository,BuyerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
