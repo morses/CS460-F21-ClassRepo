@@ -18,6 +18,11 @@ namespace AuctionHouse.DAL.Concrete
         {
             return _context.Buyers.ToList();
         }
+
+        public List<string> GetEmailList()
+        {
+            return _context.Buyers.Select(b => b.Email).ToList();
+        }
     }
 
 }
