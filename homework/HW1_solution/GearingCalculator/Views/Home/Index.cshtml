@@ -1,0 +1,121 @@
+﻿@model GearingCalculator.ViewModels.GearingCalcInputVM;
+@{
+    ViewData["Title"] = "Cycling Gearing Calculator";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Bike Gearing Calculator</h1>
+</div>
+<!--div class="row">
+    <div class="col"-->
+        <form asp-action="Index" method="get">
+            <!--div asp-validation-summary="ModelOnly" class="text-danger"></div-->
+            <div class="row mb-3 form-group">
+                <label for="WheelCircumference" class="col-sm-4 col-form-label">Wheel circumference (mm)</label>
+                <div class="col-sm-6">
+                    <input asp-for="WheelCircumference" class="form-control" />
+                    <span asp-validation-for="WheelCircumference" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3 form-group">
+                <label for="FrontChainringSizes" class="col-sm-4 col-form-label">Front chainring sizes</label>
+                <div class="col-sm-6">
+                    <input asp-for="FrontChainringSizes" class="form-control" />
+                    <span asp-validation-for="FrontChainringSizes" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3 form-group">
+                <label for="RearChainringSizes" class="col-sm-4 col-form-label">Rear cog sizes</label>
+                <div class="col-sm-6">
+                    <input asp-for="RearChainringSizes" class="form-control" />
+                    <span asp-validation-for="RearChainringSizes" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3 form-group">
+                <label for="Cadence" class="col-sm-4 col-form-label">Cadence (rpm)</label>
+                <div class="col-sm-6">
+                    <input asp-for="Cadence" class="form-control" />
+                    <span asp-validation-for="Cadence" class="text-danger"></span>
+                </div>
+            </div>
+            <fieldset class="row mb-3 form-group">
+                <legend class="col-form-label col-sm-8 pt-0">Display units</legend>
+                <div class="col-sm-4 offset-sm-4">
+                    @foreach( var unit in GearingCalculator.ViewModels.GearingCalcInputVM.Units )
+                    {
+                        <div class="form-check">
+                            <input type="radio" asp-for="DisplayUnits" value="@unit" id="Unit@(unit)" class="form-check-input">
+                            <label class="form-check-label " for="DisplayUnits">
+                            @unit
+                            </label>
+                        </div>
+                    }
+                </div>
+            </fieldset>
+            <input type="submit" value="Calculate" class="btn btn-primary">
+        </form>
+    <!--/div>
+</div-->
+@if(ViewBag.IsValid)
+{
+    int minSpeed = (int)Math.Floor(Model.MinSpeed());
+    int maxSpeed = (int)Math.Ceiling(Model.MaxSpeed());
+    int middleSpeed = (int)((Model.MaxSpeed()+Model.MinSpeed())/2);
+
+    <div class="row mt-4 mb-1">
+        <div class="col-sm-4">
+            <input type="range" id="speedHighlightingSlider" name="speedHighlightingSlider" min="@minSpeed" max="@maxSpeed" value="@middleSpeed" class="form-range form-control">
+        </div>
+        <div class="col-sm-4">
+            <label for="speedHighlighting" id="highlightLabel" class="mx-4 form-label">Highlight speeds over/under @middleSpeed </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-sm table-bordered table-responsive" style="margin: 0 auto;">
+                <thead class="table-light">
+                    <th scope="col">Rear</th>
+                    @foreach(int frontCog in Model.FrontChainringValues())
+                    {
+                        <th scope="col">@frontCog</th>
+                    }
+                </thead>
+                <tbody>
+                    @foreach(int rearCog in Model.RearChainringValues())
+                    {
+                        <tr scope="row">
+                            <td scope="row"><strong>@rearCog</strong></td>
+                            @foreach(int frontCog in Model.FrontChainringValues())
+                            {
+                                <td class="speedValue">@Model.Speed(frontCog,rearCog).ToString("F1")</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @section Scripts {
+        <script>
+            $(document).on('input','#speedHighlightingSlider', function() {
+                    $(".speedValue").each( function( index ) {
+                            let selectedValue = $('#speedHighlightingSlider').val();
+                            $('#highlightLabel').text(`Highlight speeds over/under ${selectedValue}`);
+                            $(this).removeClass('overSpeed underSpeed');
+                            if(Number($(this).text()) > selectedValue)
+                            {
+                                $(this).addClass('overSpeed');
+                            }
+                            else
+                            {
+                                $(this).addClass('underSpeed');
+                            }
+                        }
+                    );
+                });
+            // trigger an input
+            let initialSliderValue = $('#speedHighlightingSlider').val();
+            $('#speedHighlightingSlider').val(initialSliderValue).trigger('input');
+        </script>
+    }
+}
