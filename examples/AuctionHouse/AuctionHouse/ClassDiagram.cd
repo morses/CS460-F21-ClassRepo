@@ -19,7 +19,7 @@
     </ShowAsAssociation>
   </Class>
   <Interface Name="AuctionHouse.DAL.Abstract.IBuyerRepository">
-    <Position X="5.75" Y="3" Width="1.5" />
+    <Position X="5.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>DAL\Abstract\IBuyerRepository.cs</FileName>
