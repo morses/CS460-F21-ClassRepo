@@ -34,6 +34,7 @@ namespace AuctionHouse
             // Configure the built-in DI container to provide a BuyerRepository
             // when an IBuyerRepository is requested
             services.AddScoped<IBuyerRepository,BuyerRepository>();
+            services.AddScoped<IItemRepository,ItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
