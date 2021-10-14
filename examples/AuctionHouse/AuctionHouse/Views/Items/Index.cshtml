@@ -3,9 +3,31 @@
     ViewData["Title"] = "Home Page";
 }
 
+<h1 class="text-center mb-5">Current Auction Items</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item Name</th><th>Seller</th><th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Item it in Model)
+        {
+            <tr>
+                <td>@it.Name</td><td>@it.Seller.FullName()</td><td>@it.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add a new Item!</a>
+@*
 <ul>
     @foreach(Item it in Model)
     {
         <li>@it.Name, @it.Description, @it.SellerId</li>
     }
 </ul>
+*@
+

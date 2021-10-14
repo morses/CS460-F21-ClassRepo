@@ -17,7 +17,9 @@ namespace AuctionHouse.DAL.Concrete
         }
         public List<Item> Items()
         {
-            return _context.Items.ToList();
+            //return _context.Items.ToList();
+            return _context.Items.Include(i => i.Seller)
+                                 .Include(i => i.Bids).ToList();
         }
 
         public Item FindById(int id)
@@ -25,8 +27,9 @@ namespace AuctionHouse.DAL.Concrete
             Item item = _context.Items.Find(id);
             return item;
         }
-
-        public bool SaveToDb()
+// Probably good reason not to do it this way, but rather to put the savechanges right in the add,update,delete, ...
+// remember, otherwise those methods won't be able to return the updated object.
+/*        public bool SaveToDb()
         {
             bool success = true;
             try
@@ -43,10 +46,13 @@ namespace AuctionHouse.DAL.Concrete
             }
             return success;
         }
+*/
 
-        void Add(Item newItem)
+        public Item Add(Item newItem)
         {
             _context.Items.Add(newItem);
+            _context.SaveChanges();
+            return newItem;
         }
 /*
         Item AddOrUpdate(Item item);

@@ -35,6 +35,7 @@ namespace AuctionHouse
             // when an IBuyerRepository is requested
             services.AddScoped<IBuyerRepository,BuyerRepository>();
             services.AddScoped<IItemRepository,ItemRepository>();
+            services.AddScoped<ISellerRepository,SellerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

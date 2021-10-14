@@ -10,8 +10,10 @@ namespace AuctionHouse.DAL.Abstract
 
         Item FindById(int id);
 
-/*        Item Add(Item newItem);
+        // Add and save changes.  Will throw exceptions...
+        Item Add(Item newItem);
 
+/*
         Item AddOrUpdate(Item item);
 
         void RemoveById(int id);
