@@ -27,9 +27,10 @@ namespace AJAXExample.DAL.Concrete
 			Debug.WriteLine(jsonResponse);
 
             List<Earthquake> output = new List<Earthquake>();
+			// Handle an exception here!!!
 			JObject geo = JObject.Parse(jsonResponse);
 			int count = (int)geo["metadata"]["count"];
-			
+			// validate count!!!
 			for(int i = 0; i < count; i++)
             {
 				string place = (string)geo["features"][i]["properties"]["place"];

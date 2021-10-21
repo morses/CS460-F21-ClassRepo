@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AJAXExample.Models;
 using AJAXExample.DAL.Abstract;
+using Microsoft.Extensions.Configuration;
 
 namespace AJAXExample.Controllers
 {
@@ -13,11 +14,13 @@ namespace AJAXExample.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IEarthquakeService _earthquakes;
+        private readonly IConfiguration _config;
 
-        public HomeController(ILogger<HomeController> logger, IEarthquakeService e)
+        public HomeController(ILogger<HomeController> logger, IEarthquakeService e, IConfiguration configuration)
         {
             _logger = logger;
             _earthquakes = e;
+            _config = configuration;
         }
 
         public IActionResult Index()
@@ -61,6 +64,8 @@ namespace AJAXExample.Controllers
 
         public IActionResult Privacy()
         {
+            string key = _config["AJAXExample:GiphyKey"];
+            Debug.WriteLine(key);
             return View();
         }
 

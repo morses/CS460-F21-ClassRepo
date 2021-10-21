@@ -13,9 +13,9 @@
                 <button id="numberButton" name="numberButton" type="button" class="btn btn-outline-primary" type="submit">Request Random Numbers</button>
             </form>
             <div>
-                <div id="numberMessage"></div>
-                <div id="numberCount"></div>
-                <div id="numbers" class="text-wrap text-success"></div>
+                <div id="numberMessage">@*Will be filled in by JS*@</div>
+                <div id="numberCount">@*Will be filled in by JS*@</div>
+                <div id="numbers" class="text-wrap text-success">@*Will be filled in by JS*@</div>
             </div>
         </div>
         
@@ -57,6 +57,11 @@
 
 @section Scripts 
 {
+    <script>
+        console.log("hello world");
+        $('#earthquakeTable').empty();
+    </script>
+
     <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript" src="~/js/main.js"></script>
 }
