@@ -12,6 +12,7 @@ using AuctionHouse.Models;
 using Microsoft.EntityFrameworkCore;
 using AuctionHouse.DAL.Abstract;
 using AuctionHouse.DAL.Concrete;
+using AuctionHouse.Areas.Identity.Data;
 
 namespace AuctionHouse
 {
@@ -28,6 +29,7 @@ namespace AuctionHouse
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
             services.AddDbContext<AuctionHouseDbContext>( options => 
                 options.UseSqlServer(Configuration.GetConnectionString("AuctionHouseConnection"))
             );
@@ -35,6 +37,9 @@ namespace AuctionHouse
             // when an IBuyerRepository is requested
             services.AddScoped( typeof(IRepository<>), typeof(Repository<>) );
             services.AddScoped<DbContext, AuctionHouseDbContext>();
+            services.AddDbContext<AuctionHouseIdentityDbContext>( options => 
+                options.UseSqlServer(Configuration.GetConnectionString("AuctionHouseIdentityDbContextConnection"))
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,13 +60,16 @@ namespace AuctionHouse
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
