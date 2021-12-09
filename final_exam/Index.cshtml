@@ -1,0 +1,36 @@
+@model IEnumerable<Game.Models.Character>
+@{
+    ViewData["Title"] = "Characters";
+}
+
+<h1 class="text-center mb-5">Current Characters</h1>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Created</th>
+            <th scope="col">Level</th>
+            <th scope="col">Health</th>
+            <th scope="col">Class</th>
+            <th scope="col"># of Abilities</th>
+            <th scope="col"># of Weapons</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Character c in Model)
+        {
+            <tr>
+                <td></td>  @*Name goes here*@
+                <td></td>  @*Created date goes here*@
+                <td></td>  @*Level goes here*@
+                <td></td>  @*Health goes here*@
+                <td></td>  @*Class name goes here*@
+                <td></td>  @*# of Abilities goes here*@
+                <td></td>  @*# of Weapons goes here*@
+                <td></td>  @*Details link goes here*@
+            </tr>
+        }
+    </tbody>
+</table>

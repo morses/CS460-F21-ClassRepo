@@ -1,0 +1,73 @@
+
+@* You have to decide on the model for this page. This is normal Razor view.  
+Only the Level up button is implemented with Javascript/AJAX. *@
+@{
+    ViewData["Title"] = "Character";
+}
+
+@if(Model == null)
+{
+    <h1 class="text-center mb-5 display-2">Character Not Found</h1>
+}
+else
+{
+    <h1 class="text-center mb-5 display-2 border-bottom"> </h1>  @* Characters name goes here *@
+    <div class="row">
+        <!-- Image of character -->
+        <div class="col">
+            <img src="/img/mask_image.jpg" alt="Placeholder image for game character" width="300">
+        </div>
+
+        <!-- Character's stats -->
+        <div class="col">
+            <h2 class="display-4"></h2>                  @* Characters class name goes here *@
+            <dl class="row">
+                <dt class="col-sm-2 text-success">Level:</dt>
+                <dd class="col-sm-1 text-success"></dd>  @* Level goes here *@
+                <dt class="col-sm-2 text-primary">Health:</dt>
+                <dd class="col-sm-1 text-primary"></dd>  @* Health goes here *@
+            </dl>
+            <h3 class="border-bottom">Abilities</h3>
+            <ul class="list-unstyled">
+                @foreach()
+                {
+                    @* li elements containing ability names goes here *@
+                }
+            </ul>
+        </div>
+
+        <!-- Abilities not yet acquired -->
+        <div class="col">
+            <div class="bg-custom1 card">
+                <div class="card-body">
+                     <h3 class="card-title">Available Abilities</h3>
+                    <ul class="list-unstyled">
+                        @foreach()
+                        {
+                            @* li elements containing not yet acquired ability names goes here *@
+                        }
+                    </ul>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- Level up button to be implemented with AJAX -->
+    <div class="row mt-4">
+        <div class="col">
+            <button type="button" class="btn btn-success">Level UP!</button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(
+            console.log("DOM and JS are ready");
+        );
+
+        @* Put all your Javascript and AJAX directly here for this page *@
+    
+    </script>
+}
