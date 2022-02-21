@@ -7,17 +7,29 @@ using Fuji.DAL.Concrete;
 using Fuji.Utilities;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;  // dotnet add package System.Data.SqlClient
 using Fuji.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var authenticationConnectionString = builder.Configuration.GetConnectionString("FujiAuthenticationNET6Connection");
-builder.Services.AddDbContext<AuthenticationDbContext>(options =>
-    options.UseSqlServer(authenticationConnectionString));
-var fujiConnectionString = builder.Configuration.GetConnectionString("FujiApplicationNET6Connection");
-builder.Services.AddDbContext<FujiDbContext>(options =>
-    options.UseSqlServer(fujiConnectionString));
+var authenticationConnectionString = builder.Configuration.GetConnectionString("FujiAuthenticationNET6ConnectionDocker");
+SqlConnectionStringBuilder csbAuth = new SqlConnectionStringBuilder(authenticationConnectionString);
+// Use Vince's approach to local-cloud connection string nirvana
+if(csbAuth.Password == String.Empty)
+{
+    csbAuth.Password = builder.Configuration["dbpassword"];
+}
+builder.Services.AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(csbAuth.ConnectionString));
+
+var fujiConnectionString = builder.Configuration.GetConnectionString("FujiApplicationNET6ConnectionDocker");
+SqlConnectionStringBuilder csbApp = new SqlConnectionStringBuilder(fujiConnectionString);
+if(csbApp.Password == String.Empty)
+{
+    csbApp.Password = builder.Configuration["dbpassword"];
+}
+builder.Services.AddDbContext<FujiDbContext>(options => options.UseSqlServer(csbApp.ConnectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
