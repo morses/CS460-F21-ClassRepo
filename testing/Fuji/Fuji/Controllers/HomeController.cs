@@ -23,11 +23,10 @@ namespace Fuji.Controllers
             _appleRepo = appleRepo;
         }
         
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            // Information from Identity through the user manager
-            string? id = _userManager.GetUserId(User);       // reportedly does not need to hit the db
-            IdentityUser user = await _userManager.GetUserAsync(User);  // does go to the db
+            // --- Assemble all info the view will need
+            string? id = _userManager.GetUserId(User);
 
             FujiUser? fu = null;
             if(id != null)
@@ -35,11 +34,19 @@ namespace Fuji.Controllers
                 fu = _fuRepo.GetFujiUserByIdentityId(id);
             }
 
-            var appleList = _appleRepo.GetAll().ToList();
-            MainPageVM vm = new MainPageVM { TheIdentityUser = user, TheFujiUser = fu, Apples = appleList };
+            // --- Put that info into the view model
+            MainPageVM vm = new MainPageVM()
+            {
+                HasFujiUser = fu != null,
+                FirstName   = fu?.FirstName ?? String.Empty,
+                LastName    = fu?.LastName ?? String.Empty,
+                //AllPossibleApples   = appleList, // if we're OK with re-assigning and losing the empty list to garbage collection
+                TotalApplesConsumedByAllUsers = _appleRepo.GetTotalConsumed(_appleRepo.GetAll())
+            };
+            // add to the empty list that we had to initialize it with to avoid nullable warnings
+            vm.AllPossibleApples.AddRange(_appleRepo.GetAll().ToList());
 
-            ViewBag.TotalConsumed = _appleRepo.GetTotalConsumed(_appleRepo.GetAll());
-
+            // --- Hand it off to the view
             return View(vm);
         }
 

@@ -1,4 +1,7 @@
 ﻿@model MainPageVM
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,14 +11,14 @@
     <p>Example used for adding to our unit testing capabilities.</p>
 </div>
 
-@if (Model!.TheIdentityUser != null && Model.TheFujiUser != null)
+@if (SignInManager.IsSignedIn(User) && Model.HasFujiUser)
 {
     <div class="row">
         <div class="col">
-            <h2>How many Apples have you eaten today @Model.TheFujiUser.FirstName @Model.TheFujiUser.LastName ? </h2>
+            <h2>How many Apples have you eaten today @Model.FirstName @Model.LastName ? </h2>
             <p>Click on each apple to indicate you ate one today</p>
             <div class="list-group" id="listOfApples">
-                @foreach (Apple a in Model!.Apples)
+                @foreach (Apple a in Model.AllPossibleApples)
                 {
                     // We'll set up a javascript listener on these buttons to send an AJAX message to our controller
                     var appleID = "a" + a.Id;
@@ -23,7 +26,7 @@
                 }
             </div>
             <p id="appleTotals"></p>
-            <p>Total Consumed in entire db = @ViewBag.TotalConsumed</p>
+            <p>Total Consumed in entire db = @Model.TotalApplesConsumedByAllUsers</p>
         </div>
     </div>
 }

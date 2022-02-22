@@ -5,6 +5,8 @@ namespace Fuji_Tests;
 
 public class MainPageTests
 {
+    // These test examples aren't useful anymore since we completely changed the view model
+    // so ignore these for this version/commit
     private static MainPageVM MakeValidMainPageVM()
     {
         return new MainPageVM
