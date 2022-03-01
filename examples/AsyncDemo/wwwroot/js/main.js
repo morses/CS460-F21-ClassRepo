@@ -1,5 +1,4 @@
-﻿
-// These match the controller action methods
+﻿// These match the controller action methods
 const RUN_TYPE = {
     '1': 'Home/GetDataSynchronous',
     '2': 'Home/GetDataAsynchronous',
@@ -7,15 +6,15 @@ const RUN_TYPE = {
 };
 
 // Setup hiding and showing the loading animation
-$(function () {
+$(function() {
     $('#loadingAnimation').hide();
 });
 
-$(document).ajaxStart(function () {
+$(document).ajaxStart(function() {
     $('.results').hide();
     $('#loadingAnimation').show();
 });
-$(document).ajaxStop(function () {
+$(document).ajaxStop(function() {
     $('#loadingAnimation').hide();
     $('.results').show();
 });
@@ -28,7 +27,7 @@ function showResults(data) {
     gdata = data;
     // stop the clock
     endTime = new Date();
-    let dt = endTime - startTime;  // this is in ms
+    let dt = endTime - startTime; // this is in ms
     // add results to the DOM
 
     displayEarthquakes(data.earthquakes);
@@ -48,7 +47,7 @@ function handleError(xhr, ajaxOptions, thrownError) {
 
 // Register a click callback on the submit button to get things going:
 //   fetch the data via AJAX and then show the results
-$('#submit').click(function (event) {
+$('#submit').click(function(event) {
     event.preventDefault();
 
     // Which radio button is selected determines the endpoint used
@@ -58,6 +57,8 @@ $('#submit').click(function (event) {
     // start the clock
     startTime = new Date();
 
+    // Version 1: Using jQuery
+
     $.ajax({
         type: 'GET',
         url: selectedMethod,
@@ -65,7 +66,42 @@ $('#submit').click(function (event) {
         success: showResults,
         error: handleError
     });
+
+    // Version 2: Using built-in Fetch API.
+    const request = new Request(selectedMethod, {
+        method: 'GET',
+        //body: someDataWeMightNeedToSend,
+        headers: new Headers({
+            'Accept': 'application/json'
+        })
+    });
+    /*    fetch(request) // returns a Promise that resolves to a Request object
+            .then((response) => { // then() invokes the callback when the promise is resolved
+                if (response.ok)
+                    return response.json();
+                else
+                    throw Error(response.statusText);
+            })
+            .then((data) => {
+                showResults(data);
+            })
+            .catch((error) => { // catch() is used for the rejected state of the promise
+                console.log(error);
+            })
+    */
+    // Version 3: Using the built-in Fetch API but with explicit async/await syntax
+    /*
+        const response = await fetch(request);
+        if (response.ok) {
+            const jsonData = await response.json();
+            showResults(jsonData);
+        } else {
+            console.log(response.status, response.statusText);
+        }
+    */
 });
+
+
 
 // Display the earthquake data in a table
 function displayEarthquakes(data) {
