@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;            // dotnet add package RestSharp
 using Newtonsoft.Json;      // dotnet add package Newtonsoft.Json
@@ -49,6 +50,7 @@ namespace AsyncDemo.Models
                 bpi.Days.Add(DateTime.Parse(entry.Key));
                 bpi.ClosingPrices.Add(entry.Value);
             }
+            Thread.Sleep(500);
             return bpi;
         }
 
@@ -68,6 +70,7 @@ namespace AsyncDemo.Models
                 bpi.Days.Add(DateTime.Parse(entry.Key));
                 bpi.ClosingPrices.Add(entry.Value);
             }
+            Thread.Sleep(500);
             return bpi;
         }
 

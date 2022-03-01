@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -55,6 +56,7 @@ namespace AsyncDemo.Models
 				reader.Close();
 				stream.Close();
 			}
+			Thread.Sleep(500);
 			return jsonString;
 		}
 
@@ -96,6 +98,7 @@ namespace AsyncDemo.Models
             {
 				return jsonString;
             }
+			Thread.Sleep(500);
 			return jsonString;
 		}
 
