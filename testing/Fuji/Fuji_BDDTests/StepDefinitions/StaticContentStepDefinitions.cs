@@ -1,5 +1,3 @@
-using System;
-using TechTalk.SpecFlow;
 using Fuji_BDDTests.PageObjects;
 
 namespace Fuji_BDDTests.StepDefinitions

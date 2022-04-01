@@ -46,11 +46,11 @@ Scenario Outline: Non-user cannot login
 	| Andre     |
 	| Joanna    |
 
-Scenario Outline: Non-user attempting to login is logged
-	Given I am a user with first name '<FirstName>'
-	When I login
-	Then an unsuccessful login attempt by '<FirstName>' is logged
-	Examples:
-	| FirstName |
-	| Andre     |
-	| Joanna    |
+#Scenario Outline: Non-user attempting to login is logged
+#	Given I am a user with first name '<FirstName>'
+#	When I login
+#	Then an unsuccessful login attempt by '<FirstName>' is logged
+#	Examples:
+#	| FirstName |
+#	| Andre     |
+#	| Joanna    |

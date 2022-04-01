@@ -3,25 +3,29 @@ using SpecFlow.Actions.Selenium;
 
 namespace Fuji_BDDTests.PageObjects
 {
-    public class HomePage
+    public class HomePage : Page
     {
-        private readonly IBrowserInteractions _browserInteractions;
-
-        private const string PageUrl = "https://localhost:7100/";
-
         private IWebElement Title => _browserInteractions.WaitAndReturnElement(By.Id("title"));
+        private IWebElement WelcomeText => _browserInteractions.WaitAndReturnElement(By.Id("loggedin-welcome"));
+        private IEnumerable<IWebElement> AppleButtons => _browserInteractions.WaitAndReturnElements(By.CssSelector("#listOfApples button"));
 
         public HomePage(IBrowserInteractions browserInteractions)
+            :base(browserInteractions)
         {
-            _browserInteractions = browserInteractions;
-        }
-
-        public void Goto()
-        {
-            _browserInteractions.GoToUrl(PageUrl);
+            PageName = Common.HomePageName;
         }
 
         public string GetTitle => Title.Text;
+        public string GetWelcomeText => WelcomeText.Text;
+
+        public string GetAppleButtonText(int index) => AppleButtons.ElementAt(index).Text;
+
+        public IEnumerable<string> GetAppleButtonTexts() => AppleButtons.Select(x => x.Text);
+
+        public void ClickAppleButton(int index)
+        {
+            AppleButtons.ElementAt(index).Click();
+        }
 
     }
 }
