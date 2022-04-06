@@ -1,6 +1,10 @@
 ﻿{
   "selenium": {
-    "browser": "chrome",
+    "browser": "edge",
+    "capabilities": {
+      
+    },
+      
     "defaultTimeout": 60,
     "pollingInterval": 5
   }
