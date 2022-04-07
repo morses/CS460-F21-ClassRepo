@@ -98,5 +98,18 @@ namespace Fuji_BDDTests.StepDefinitions
         {
             _loginPage.HasLoginError().Should().BeTrue();
         }
+
+        [Then(@"I can save all cookies")]
+        public void ThenICanSaveAllCookies()
+        {
+            _homePage.SaveAllCookies();
+        }
+
+        [When(@"I load a previous sessions cookies")]
+        public void WhenILoadAPreviousSessionsCookies()
+        {
+            _homePage.LoadAllCookies();
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SpecFlow.Actions.Selenium;
+using System.Collections.ObjectModel;
 
 namespace Fuji_BDDTests.PageObjects
 {
@@ -25,6 +26,27 @@ namespace Fuji_BDDTests.PageObjects
         public void ClickAppleButton(int index)
         {
             AppleButtons.ElementAt(index).Click();
+        }
+
+        public void SaveAllCookies()
+        {
+            ReadOnlyCollection<Cookie> cookies = _browserInteractions.GetCookies();
+            FileUtils.SerializeCookiesToFile(Common.CookieFile, cookies);
+        }
+
+        public void LoadAllCookies()
+        {
+            List<Cookie> cookies = FileUtils.DeserializeCookiesFromFile(Common.CookieFile);
+            foreach(Cookie cookie in cookies)
+            {
+                _browserInteractions.AddCookie(cookie);
+            }
+            _browserInteractions.RefreshPage();
+        }
+
+        public void DeleteCookies()
+        {
+            _browserInteractions.DeleteAllCookies();
         }
 
     }

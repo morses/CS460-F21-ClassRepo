@@ -44,3 +44,17 @@ Scenario: User can record eating an apple
 	  And I am on the 'Home' page
 	When I record eating an apple
 	Then I see the count of that apple has increased by 1
+
+# Save cookies for Talia
+Scenario: Save cookies for a given user
+	Given I am a user with first name 'Talia'
+	When I login
+	Then I can save all cookies
+
+# Login as Talia without actually logging in
+Scenario: Load cookies for a given user
+	Given I am a user with first name 'Talia'
+	And I am on the 'Home' page
+	When I load a previous sessions cookies
+		And I am on the 'Home' page
+	Then I can see all the apples

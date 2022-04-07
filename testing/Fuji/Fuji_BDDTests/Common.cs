@@ -14,6 +14,9 @@ namespace Fuji_BDDTests
         public const string HomePageName  = "Home";
         public const string LoginPageName = "Login";
 
+        // File to store browser cookies in
+        public const string CookieFile = "..\\..\\..\\..\\..\\..\\..\\FujiCookies.txt";
+
         // A handy way to look these up
         public static readonly Dictionary<string, string> Paths = new()
         {
