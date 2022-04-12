@@ -13,7 +13,7 @@ using Fuji.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var authenticationConnectionString = builder.Configuration.GetConnectionString("FujiAuthenticationNET6ConnectionDocker");
+var authenticationConnectionString = builder.Configuration.GetConnectionString("FujiAuthenticationNET6Connection");
 SqlConnectionStringBuilder csbAuth = new SqlConnectionStringBuilder(authenticationConnectionString);
 // Use Vince's approach to local-cloud connection string nirvana
 if(csbAuth.Password == String.Empty)
@@ -22,7 +22,7 @@ if(csbAuth.Password == String.Empty)
 }
 builder.Services.AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(csbAuth.ConnectionString));
 
-var fujiConnectionString = builder.Configuration.GetConnectionString("FujiApplicationNET6ConnectionDocker");
+var fujiConnectionString = builder.Configuration.GetConnectionString("FujiApplicationNET6Connection");
 SqlConnectionStringBuilder csbApp = new SqlConnectionStringBuilder(fujiConnectionString);
 if(csbApp.Password == String.Empty)
 {
